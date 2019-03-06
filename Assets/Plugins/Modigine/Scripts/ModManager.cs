@@ -1,42 +1,94 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class ModManager : MonoBehaviour
+namespace Modigine
 {
-    // This keeps track of an instance (Singleton)
-    public static ModManager Instance;
-
-    // Lua Manager
-    public LuaManager luaManager;
+    public class ModManager : MonoBehaviour
+    {
+        // This keeps track of an instance (Singleton)
+        public static ModManager Instance;
+        // This is the list of Mods loaded into the game. It can only be refreshed using the RefreshModInfo() method
+        public static List<Mod> Mods = new List<Mod>();
     
-    /// <summary>
-    /// Called upon Awake
-    /// </summary>
-    private void Awake()
-    {
-        // Check to see if this is the only unique instance
-        if(Instance != null && Instance != this)
-            Destroy(gameObject);
+        // Lua Manager
+        public LuaManager luaManager;
 
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-        
-        // Initialize Mod Manager
-        Initialize();
-    }
+        /// <summary>
+        /// Called upon Awake
+        /// </summary>
+        private void Awake()
+        {
+            // Check to see if this is the only unique instance
+            if (Instance != null && Instance != this)
+                Destroy(gameObject);
 
-    /// <summary>
-    /// Initializes the Mod Manager
-    /// </summary>
-    private void Initialize()
-    {
-        // Create a Lua Manager
-        GameObject luaManagerGo = new GameObject("Lua Manager");
-        luaManager = luaManagerGo.AddComponent<LuaManager>();
-        
-        
-        luaManager.AddScript("print('testing')");
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+
+            // Initialize Mod Manager
+            Initialize();
+        }
+
+        /// <summary>
+        /// Initializes the Mod Manager
+        /// </summary>
+        private void Initialize()
+        {
+            // Create a Lua Manager
+            GameObject luaManagerGo = new GameObject("Lua Manager");
+            luaManager = luaManagerGo.AddComponent<LuaManager>();
+
+            // Load file path and Mod Infos
+            string rootLocation = Path.GetFullPath(".");
+            string modLocation = rootLocation + "/Mods/";
+
+            // Create a mod folder if one doesn't exist
+            if (!Directory.Exists(modLocation))
+                Directory.CreateDirectory(modLocation);
+            
+            // Get all current Mod infos
+            RefreshModInfo(modLocation);
+            
+            // Now we can start the mods by doing a RunMods
+            RunMods();
+        }
+
+        /// <summary>
+        /// Clears the current list of Mods then updates it with an up to date version
+        /// </summary>
+        /// <param name="modLocation">The file path to the Mods root folder</param>
+        private void RefreshModInfo(string modLocation)
+        {
+            // Clear the current list of mods to avoid conflicts
+            Mods.Clear();
+
+            // Get Mod folders then iterate them
+            var modFolders = Directory.GetDirectories(modLocation);
+            foreach (var modFolder in modFolders)
+            {
+                // Check for Mod Info json
+                var modInfoPath = modFolder + "/ModInfo.json";
+                if (File.Exists(modInfoPath))
+                {
+                    // Read the text from the ModInfo then create a Mod object from it and add it to the list
+                    var modInfoContent = File.ReadAllText(modInfoPath);
+                    Mod newMod = JsonUtility.FromJson<Mod>(modInfoContent);
+                    newMod.ModPath = modFolder;
+                    Mods.Add(newMod);
+                    Modigine.print("Loaded " + newMod.ModName  + " by " + newMod.ModAuthor, "green");
+                }
+            }
+        }
+
+        /// <summary>
+        /// This searches all the mod folders for scripts and resources by file extension then implements them into the game using their required modules
+        /// </summary>
+        private void RunMods()
+        {
+            
+        }
     }
 }
