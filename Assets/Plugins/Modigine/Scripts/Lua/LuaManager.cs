@@ -28,6 +28,14 @@ namespace Modigine
 		}
 
 		/// <summary>
+		/// Initializes the LuaManager
+		/// </summary>
+		public void Initialize()
+		{
+			LuaCustomConverters.RegisterAll();
+		}
+
+		/// <summary>
 		/// Add a new script to the list for the interpreter
 		/// </summary>
 		/// <param name="lua">The LuaScript object you'd like to add to runtime</param>

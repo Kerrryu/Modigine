@@ -64,8 +64,10 @@ namespace Modigine
 			UserData.RegisterType<Time>();
 			UserData.RegisterType<KeyCode>();
 			UserData.RegisterType<GUILayout>();
+			UserData.RegisterType<LuaAddons>();
 			UserData.RegisterType<LuaScript>();
 
+			script.Globals["Modigine"] = new LuaAddons();
 			script.Globals["GameObject"] = UserData.CreateStatic(typeof(GameObject));
 			script.Globals["Debug"] = UserData.CreateStatic(typeof(Debug));
 			script.Globals["Input"] = UserData.CreateStatic(typeof(Input));

@@ -40,6 +40,7 @@ namespace Modigine
             // Create a Lua Manager
             GameObject luaManagerGo = new GameObject("Lua Manager");
             luaManager = luaManagerGo.AddComponent<LuaManager>();
+            luaManager.Initialize();
 
             // Load file path and Mod Infos
             string rootLocation = Path.GetFullPath(".");
@@ -88,7 +89,20 @@ namespace Modigine
         /// </summary>
         private void RunMods()
         {
-            
+            // Iterate the mods loaded
+            foreach (Mod mod in Mods)
+            {
+                var files = Directory.GetFiles(mod.ModPath, "*", SearchOption.AllDirectories);
+                foreach (var file in files)
+                {
+                    if (file.EndsWith(".lua"))
+                    {
+                        string content = File.ReadAllText(file);
+                        luaManager.AddScript(content);
+                        Modigine.print("Loaded " + file);
+                    }
+                }
+            }
         }
     }
 }
