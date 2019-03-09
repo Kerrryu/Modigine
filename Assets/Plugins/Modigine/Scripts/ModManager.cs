@@ -72,15 +72,14 @@ namespace Modigine
             {
                 // Check for Mod Info json
                 var modInfoPath = modFolder + "/ModInfo.json";
-                if (File.Exists(modInfoPath))
-                {
-                    // Read the text from the ModInfo then create a Mod object from it and add it to the list
-                    var modInfoContent = File.ReadAllText(modInfoPath);
-                    Mod newMod = JsonUtility.FromJson<Mod>(modInfoContent);
-                    newMod.ModPath = modFolder;
-                    Mods.Add(newMod);
-                    Modigine.print("Loaded " + newMod.ModName  + " by " + newMod.ModAuthor, "green");
-                }
+                if (!File.Exists(modInfoPath)) continue;
+                
+                // Read the text from the ModInfo then create a Mod object from it and add it to the list
+                var modInfoContent = File.ReadAllText(modInfoPath);
+                Mod newMod = JsonUtility.FromJson<Mod>(modInfoContent);
+                newMod.ModPath = modFolder;
+                Mods.Add(newMod);
+                Modigine.print("Loaded " + newMod.ModName  + " by " + newMod.ModAuthor, "green");
             }
         }
 
