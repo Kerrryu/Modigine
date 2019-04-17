@@ -14,20 +14,6 @@ namespace Modigine
 		public List<LuaScript> Scripts = new List<LuaScript>();
 
 		/// <summary>
-		/// Called upon awake
-		/// </summary>
-		private void Awake()
-		{
-			if (Instance != null && Instance != this)
-			{
-				Destroy(gameObject);
-			}
-
-			Instance = this;
-			DontDestroyOnLoad(gameObject);
-		}
-
-		/// <summary>
 		/// Initializes the LuaManager
 		/// </summary>
 		public void Initialize()

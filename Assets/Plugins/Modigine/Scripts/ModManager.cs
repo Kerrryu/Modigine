@@ -8,26 +8,30 @@ namespace Modigine
 {
     public class ModManager : MonoBehaviour
     {
-        // This keeps track of an instance (Singleton)
-        public static ModManager Instance;
         // This is the list of Mods loaded into the game. It can only be refreshed using the RefreshModInfo() method
         public static List<Mod> Mods = new List<Mod>();
-    
-        // Lua Manager
-        public LuaManager luaManager;
 
         /// <summary>
         /// Called upon Awake
         /// </summary>
         private void Awake()
         {
+            var instance = Modigine.modManager;
+
             // Check to see if this is the only unique instance
-            if (Instance != null && Instance != this)
+            if (instance != null && instance != this)
                 Destroy(gameObject);
 
-            Instance = this;
+            Modigine.modManager = this;
             DontDestroyOnLoad(gameObject);
+        }
 
+        /// <summary>
+        /// Start is called on the frame when a script is enabled just before
+        /// any of the Update methods is called the first time.
+        /// </summary>
+        void Start()
+        {
             // Initialize Mod Manager
             Initialize();
         }
@@ -38,9 +42,16 @@ namespace Modigine
         private void Initialize()
         {
             // Create a Lua Manager
-            GameObject luaManagerGo = new GameObject("Lua Manager");
-            luaManager = luaManagerGo.AddComponent<LuaManager>();
-            luaManager.Initialize();
+            var luaManagerGo = new GameObject("Lua Manager");
+            luaManagerGo.transform.SetParent(transform);
+            Modigine.luaManager = luaManagerGo.AddComponent<LuaManager>();
+            Modigine.luaManager.Initialize();
+
+            // Create a Register Manager
+            var registerManagerGo = new GameObject("Register Manager");
+            registerManagerGo.transform.SetParent(transform);
+            Modigine.registerManager = registerManagerGo.AddComponent<RegisterManager>();
+            registerManagerGo.AddComponent<RegisterLoader>();
 
             // Load file path and Mod Infos
             string rootLocation = Path.GetFullPath(".");
@@ -94,12 +105,7 @@ namespace Modigine
                 var files = Directory.GetFiles(mod.ModPath, "*", SearchOption.AllDirectories);
                 foreach (var file in files)
                 {
-                    if (file.EndsWith(".lua"))
-                    {
-                        string content = File.ReadAllText(file);
-                        luaManager.AddScript(content);
-                        Modigine.print("Loaded " + file);
-                    }
+                    Modigine.registerManager.RegisterFile(file);
                 }
             }
         }
