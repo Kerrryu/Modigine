@@ -4,6 +4,12 @@
 
 ***
 
+Currently Supports:
+- Lua
+- More coming soon
+
+***
+
 Need to handle custom file types?
 Here is how you can add a new FileRegister:
 1) Create a new class implementing the IFileRegister Interface
