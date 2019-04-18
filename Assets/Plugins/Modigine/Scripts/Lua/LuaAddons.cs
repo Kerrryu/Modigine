@@ -45,7 +45,6 @@ namespace Modigine
             Object objResource = Modigine.resourceManager.GetResource(resourceName);
             if(objResource != null)
             {
-                Modigine.print("ok"); 
                 // Create Gameobject
                 var go = new GameObject(resourceName);
                 go.transform.position = pos;

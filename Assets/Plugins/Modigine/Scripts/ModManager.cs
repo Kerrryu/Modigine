@@ -8,6 +8,9 @@ namespace Modigine
 {
     public class ModManager : MonoBehaviour
     {
+        // Is the mod manager done initializing and loading all mods
+        public static bool READY = false;
+
         // This is the list of Mods loaded into the game. It can only be refreshed using the RefreshModInfo() method
         public static List<Mod> Mods = new List<Mod>();
 
@@ -113,6 +116,10 @@ namespace Modigine
                     Modigine.registerManager.RegisterFile(file);
                 }
             }
+
+            // Complete mod loading phase
+            Modigine.luaManager.RunScripts();
+            READY = true;
         }
     }
 }

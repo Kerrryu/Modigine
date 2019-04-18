@@ -33,15 +33,21 @@ namespace Modigine
 		{
 			_code = code;
 			_script = new Script();
+		}
 
+		/// <summary>
+		/// Initialize
+		/// </summary>
+		public void Init()
+		{
 			// Initialize the script and add the code
 			InitializeScript(_script);
 			_script.DoString(_code);
 
 			// Run Awake and Start if they exist
-			if (code.Contains("Awake"))
+			if (_code.Contains("Awake"))
 				_script.Call(_script.Globals.Get("Awake"));
-			if (code.Contains("Start"))
+			if (_code.Contains("Start"))
 				_script.Call(_script.Globals.Get("Start"));
 		}
 
@@ -49,7 +55,7 @@ namespace Modigine
 		/// This function tells the interpreter what each function in Unity does
 		/// </summary>
 		/// <param name="script"></param>
-		public void InitializeScript(Script script)
+		private void InitializeScript(Script script)
 		{
 			UserData.RegisterType<GameObject>();
 			UserData.RegisterType<Debug>();

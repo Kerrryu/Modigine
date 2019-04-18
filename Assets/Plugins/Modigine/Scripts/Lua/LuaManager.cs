@@ -30,7 +30,15 @@ namespace Modigine
 			LuaScript script = new LuaScript(code);
 			Scripts.Add(script);
 		}
-
+		
+		/// <summary>
+		/// Run Start and Awake function on each script that has them
+		/// </summary>
+		public void RunScripts()
+		{
+			foreach(var script in Scripts)
+				script.Init();
+		}
 
 		/**
 		 * 	UNITY FUNCTIONS
@@ -38,6 +46,8 @@ namespace Modigine
 
 		private void FixedUpdate()
 		{
+			if(!ModManager.READY) return;
+
 			Scripts.ForEach(x =>
 			{
 				if (x.Code.Contains("FixedUpdate"))
@@ -49,6 +59,8 @@ namespace Modigine
 
 		private void Update()
 		{
+			if(!ModManager.READY) return;
+
 			Scripts.ForEach(x =>
 			{
 				if (x.Code.Contains("Update"))
@@ -60,6 +72,8 @@ namespace Modigine
 
 		private void LateUpdate()
 		{
+			if(!ModManager.READY) return;
+
 			Scripts.ForEach(x =>
 			{
 				if (x.Code.Contains("LateUpdate"))
@@ -71,6 +85,8 @@ namespace Modigine
 
 		private void OnGUI()
 		{
+			if(!ModManager.READY) return;
+
 			Scripts.ForEach(x =>
 			{
 				if (x.Code.Contains("OnGUI"))
