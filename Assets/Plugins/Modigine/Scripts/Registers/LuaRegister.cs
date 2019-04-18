@@ -10,7 +10,6 @@ namespace Modigine
         {
             string content = File.ReadAllText(filePath);
             Modigine.luaManager.AddScript(content);
-            Modigine.print("Loaded " + filePath);
         }
     }
 }

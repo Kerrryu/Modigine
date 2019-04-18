@@ -39,5 +39,23 @@ namespace Modigine
             go.name = name;
             return go;
         }
+
+        public GameObject CreateObjectFromMesh(string resourceName, Vector3 pos)
+        {
+            Object objResource = Modigine.resourceManager.GetResource(resourceName);
+            if(objResource != null)
+            {
+                Modigine.print("ok"); 
+                // Create Gameobject
+                var go = new GameObject(resourceName);
+                go.transform.position = pos;
+                go.AddComponent<MeshRenderer>();
+                var renderer = go.AddComponent<MeshFilter>();
+                Mesh mesh = (Mesh)objResource;
+                renderer.mesh = mesh;
+                return go;
+            }
+            return null;
+        }
     }
 }

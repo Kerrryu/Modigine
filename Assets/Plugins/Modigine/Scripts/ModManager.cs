@@ -53,6 +53,11 @@ namespace Modigine
             Modigine.registerManager = registerManagerGo.AddComponent<RegisterManager>();
             registerManagerGo.AddComponent<RegisterLoader>();
 
+            // Create a Resource Manager
+            var resourceManagerGo = new GameObject("Resource Manager");
+            resourceManagerGo.transform.SetParent(transform);
+            Modigine.resourceManager = resourceManagerGo.AddComponent<ResourceManager>();
+
             // Load file path and Mod Infos
             string rootLocation = Path.GetFullPath(".");
             string modLocation = rootLocation + "/Mods/";

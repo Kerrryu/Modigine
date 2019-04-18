@@ -3,8 +3,8 @@ moveSpeed = 10
 
 function Start()
     ply = Modigine.CreateNewGO("LuaPlayer")
-    model = Modigine.CreatePrimitive("Sphere", "PlayerModel")
-    model.transform.SetParent(ply.transform)
+    model = Modigine.CreateObjectFromMesh("test", {0.0, 0.0, 0.0})
+    --model.transform.SetParent(ply.transform)
 end
 
 function Update()
