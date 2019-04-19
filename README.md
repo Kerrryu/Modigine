@@ -6,6 +6,7 @@
 
 Currently Supports:
 - Lua
+- Obj (Meshes)
 - More coming soon
 
 ***
