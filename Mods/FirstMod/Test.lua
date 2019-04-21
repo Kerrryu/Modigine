@@ -4,6 +4,7 @@ moveSpeed = 10
 function Start()
     ply = Modigine.CreateNewGO("LuaPlayer")
     model = Modigine.CreateObjectFromMesh("test", {0.0, 0.0, 0.0})
+    Modigine.SetTexture(model, "log");
     model.transform.SetParent(ply.transform)
 end
 

@@ -66,6 +66,8 @@ namespace Modigine
 			UserData.RegisterType<Vector2>();
 			UserData.RegisterType<Vector3>();
 			UserData.RegisterType<Vector4>();
+			UserData.RegisterType<Texture>();
+			UserData.RegisterType<Texture2D>();
 			UserData.RegisterType<Rect>();
 			UserData.RegisterType<Time>();
 			UserData.RegisterType<KeyCode>();

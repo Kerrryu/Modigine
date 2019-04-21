@@ -30,8 +30,13 @@ namespace Modigine
         /// <returns>The resources value as an object type</returns>
         public Object GetResource(string resourceName)
         {
-            var resource = resources[resourceName];
-            return resource; 
+            if(resources.ContainsKey(resourceName))
+            {
+                var resource = resources[resourceName];
+                return resource; 
+            }
+
+            return null;
         }
     }
 }

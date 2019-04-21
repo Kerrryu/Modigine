@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Modigine
@@ -55,6 +56,26 @@ namespace Modigine
                 return go;
             }
             return null;
+        }
+
+        public void SetTexture(GameObject go, string textureResourceName, float timeOut = 5.0f) { Modigine.luaManager.StartCoroutine(DelaySetTexture(go, textureResourceName, timeOut)); }
+        private IEnumerator DelaySetTexture(GameObject go, string textureResourceName, float timeOut)
+        {
+            Texture2D texture = null;
+            var timer = 0.0f;
+            while((texture = (Texture2D)Modigine.resourceManager.GetResource("log")) == null && timer < timeOut)
+            {
+                timer += Time.deltaTime;
+                yield return null;
+            }
+
+            if(texture != null)
+                go.GetComponent<Renderer>().material.mainTexture = texture;
+        }
+
+        public Object getResource(string name)
+        {
+            return Modigine.resourceManager.GetResource(name);
         }
     }
 }

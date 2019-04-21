@@ -13,6 +13,7 @@ namespace Modigine
             // Add the register managers
             Modigine.registerManager.AddRegister(new FileRegister(new LuaRegister(), "lua"));
             Modigine.registerManager.AddRegister(new FileRegister(new ObjRegister(), "obj"));
+            Modigine.registerManager.AddRegister(new FileRegister(new TextureRegister(), "png", "jpg", "jpeg"));
         }
     }
 }
