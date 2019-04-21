@@ -34,6 +34,7 @@ void Awake()
 {
     // FORMAT: Modigine.registerManager.AddRegister(new FileRegister(new RegisterClassName(), fileType1, fileType2, fileType3,...));
     Modigine.registerManager.AddRegister(new FileRegister(new LuaRegister(), "lua"));
+    Modigine.registerManager.AddRegister(new FileRegister(new TextureRegister(), "png", "jpg", "jpeg")
 }
 ```
 
