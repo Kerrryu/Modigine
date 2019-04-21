@@ -5,8 +5,9 @@
 ***
 
 Currently Supports:
-- Lua
-- Obj (Meshes)
+- Lua (.lua)
+- Meshes (.obj)
+- Textures (.png, .jpg, .jpeg) 
 - More coming soon
 
 ***
